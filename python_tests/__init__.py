@@ -27,11 +27,12 @@ def get_source_files():
 
     files = []
     for code_file in scripts + modules + py_files:
+        is_script = code_file in scripts
         if not os.path.exists(code_file):
             # The alternative path is needed for Debian's pybuild
             alternative = os.path.join(os.environ.get('OLDPWD', ''), code_file)
             code_file = alternative if os.path.exists(alternative) else code_file
-        if code_file in scripts:
+        if is_script:
             with open(code_file, 'r') as script_file:
                 shebang = script_file.readline()
             if ((sys.version_info[0] == 3 and 'python3' in shebang) or
