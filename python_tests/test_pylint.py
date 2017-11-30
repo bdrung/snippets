@@ -23,7 +23,7 @@ import unittest
 
 from . import get_source_files, unittest_verbosity
 
-CONFIG = os.path.join(os.path.dirname(__file__), 'pylint.conf')
+CONFIG = os.path.join(os.path.dirname(__file__), "pylint.conf")
 
 
 class PylintTestCase(unittest.TestCase):
@@ -31,13 +31,13 @@ class PylintTestCase(unittest.TestCase):
         """Test: Run pylint on Python source code"""
 
         if sys.version_info[0] == 3:
-            pylint_binary = 'pylint3'
+            pylint_binary = "pylint3"
         else:
-            pylint_binary = 'pylint'
-        cmd = [pylint_binary, '--rcfile=' + CONFIG, '--'] + get_source_files()
+            pylint_binary = "pylint"
+        cmd = [pylint_binary, "--rcfile=" + CONFIG, "--"] + get_source_files()
         if unittest_verbosity() >= 2:
             sys.stderr.write("Running following command:\n{}\n".format(" ".join(cmd)))
-        process = subprocess.Popen(cmd, env={'PYLINTHOME': '.pylint.d'}, stdout=subprocess.PIPE,
+        process = subprocess.Popen(cmd, env={"PYLINTHOME": ".pylint.d"}, stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE, close_fds=True)
         out, err = process.communicate()
 
@@ -46,8 +46,8 @@ class PylintTestCase(unittest.TestCase):
         # ------------------------------------
         # Your code has been rated at 10.00/10
         #
-        out = re.sub('^(-+|Your code has been rated at .*)$', '', out.decode(),
+        out = re.sub("^(-+|Your code has been rated at .*)$", "", out.decode(),
                      flags=re.MULTILINE).rstrip()
 
-        self.assertEqual(len(err), 0, pylint_binary + ' crashed. Error output:\n' + err.decode())
+        self.assertEqual(len(err), 0, pylint_binary + " crashed. Error output:\n" + err.decode())
         self.assertEqual(len(out), 0, pylint_binary + " found issues:\n" + out)

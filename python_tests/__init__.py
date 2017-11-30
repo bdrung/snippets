@@ -21,22 +21,22 @@ import unittest
 
 def get_source_files():
     """Return a list of sources files/directories (to check with flake8/pylint)"""
-    scripts = ['REPLACE ME script1', 'script2']
-    modules = ['REPLACE ME module1']
-    py_files = ['REPLACE ME file1.py']
+    scripts = ["REPLACE ME script1", "script2"]
+    modules = ["REPLACE ME module1"]
+    py_files = ["REPLACE ME file1.py"]
 
     files = []
     for code_file in scripts + modules + py_files:
         is_script = code_file in scripts
         if not os.path.exists(code_file):
             # The alternative path is needed for Debian's pybuild
-            alternative = os.path.join(os.environ.get('OLDPWD', ''), code_file)
+            alternative = os.path.join(os.environ.get("OLDPWD", ""), code_file)
             code_file = alternative if os.path.exists(alternative) else code_file
         if is_script:
-            with open(code_file, 'r') as script_file:
+            with open(code_file, "r") as script_file:
                 shebang = script_file.readline()
-            if ((sys.version_info[0] == 3 and 'python3' in shebang) or
-                    ('python' in shebang and 'python3' not in shebang)):
+            if ((sys.version_info[0] == 3 and "python3" in shebang) or
+                    ("python" in shebang and "python3" not in shebang)):
                 files.append(code_file)
         else:
             files.append(code_file)
@@ -49,7 +49,7 @@ def unittest_verbosity():
     """
     frame = inspect.currentframe()
     while frame:
-        self = frame.f_locals.get('self')
+        self = frame.f_locals.get("self")
         if isinstance(self, unittest.TestProgram):
             return self.verbosity
         frame = frame.f_back
