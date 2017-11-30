@@ -23,7 +23,7 @@ from . import get_source_files, unittest_verbosity
 
 class Flake8TestCase(unittest.TestCase):
     def test_flake8(self):
-        "Test: Run flake8 on Python source code"
+        """Test: Run flake8 on Python source code"""
         with open('/proc/self/cmdline', 'r') as cmdline_file:
             python_binary = cmdline_file.read().split('\0')[0]
         cmd = [python_binary, '-m', 'flake8', '--max-line-length=99'] + get_source_files()

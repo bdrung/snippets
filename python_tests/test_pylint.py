@@ -28,7 +28,7 @@ CONFIG = os.path.join(os.path.dirname(__file__), 'pylint.conf')
 
 class PylintTestCase(unittest.TestCase):
     def test_pylint(self):
-        "Test: Run pylint on Python source code"
+        """Test: Run pylint on Python source code"""
 
         if sys.version_info[0] == 3:
             pylint_binary = 'pylint3'
