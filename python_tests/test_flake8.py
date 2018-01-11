@@ -33,5 +33,7 @@ class Flake8TestCase(unittest.TestCase):
                                    stderr=subprocess.PIPE, close_fds=True)
 
         out, err = process.communicate()
-        self.assertEqual(len(err), 0, "Unexpected stderr output from flake8:\n{}" + err.decode())
-        self.assertEqual(len(out), 0, "flake8 found issues:\n" + out.decode())
+        if err:
+            self.fail("Unexpected stderr output from flake8:\n{}" + err.decode())
+        if out:
+            self.fail("flake8 found issues:\n" + out.decode())

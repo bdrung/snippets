@@ -49,5 +49,7 @@ class PylintTestCase(unittest.TestCase):
         out = re.sub("^(-+|Your code has been rated at .*)$", "", out.decode(),
                      flags=re.MULTILINE).rstrip()
 
-        self.assertEqual(len(err), 0, pylint_binary + " crashed. Error output:\n" + err.decode())
-        self.assertEqual(len(out), 0, pylint_binary + " found issues:\n" + out)
+        if err:
+            self.fail(pylint_binary + " crashed. Error output:\n" + err.decode())
+        if out:
+            self.fail(pylint_binary + " found issues:\n" + out)
