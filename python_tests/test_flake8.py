@@ -40,7 +40,7 @@ class Flake8TestCase(unittest.TestCase):
                                    stderr=subprocess.PIPE, close_fds=True)
 
         out, err = process.communicate()
-        if err:
-            self.fail("Unexpected stderr output from flake8:\n{}" + err.decode())
-        if out:
-            self.fail("flake8 found issues:\n" + out.decode())
+        if process.returncode != 0:
+            err_msg = ("flake8 exited with code {} and has unexpected output on stderr:\n{}\n"
+                       .format(process.returncode, err.decode().rstrip())) if err else ""
+            self.fail("{}flake8 found issues:\n{}".format(err_msg, out.decode()))

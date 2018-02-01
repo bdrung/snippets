@@ -48,15 +48,15 @@ class PylintTestCase(unittest.TestCase):
                                    stderr=subprocess.PIPE, close_fds=True)
         out, err = process.communicate()
 
-        # Strip trailing summary (introduced in pylint 1.7). This summary might look like:
-        #
-        # ------------------------------------
-        # Your code has been rated at 10.00/10
-        #
-        out = re.sub("^(-+|Your code has been rated at .*)$", "", out.decode(),
-                     flags=re.MULTILINE).rstrip()
+        if process.returncode != 0:
+            # Strip trailing summary (introduced in pylint 1.7). This summary might look like:
+            #
+            # ------------------------------------
+            # Your code has been rated at 10.00/10
+            #
+            out = re.sub("^(-+|Your code has been rated at .*)$", "", out.decode(),
+                         flags=re.MULTILINE).rstrip()
 
-        if err:
-            self.fail(pylint_binary + " crashed. Error output:\n" + err.decode())
-        if out:
-            self.fail(pylint_binary + " found issues:\n" + out)
+            err_msg = ("{} exited with code {} and has unexpected output on stderr:\n{}\n"
+                       .format(pylint_binary, process.returncode, err.decode())) if err else ""
+            self.fail("{}{} found issues:\n{}".format(err_msg, pylint_binary, out))
