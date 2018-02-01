@@ -42,10 +42,12 @@ class PylintTestCase(unittest.TestCase):
         else:
             pylint_binary = "pylint"
         cmd = [pylint_binary, "--rcfile=" + CONFIG, "--"] + get_source_files()
+        env = os.environ.copy()
+        env["PYLINTHOME"] = ".pylint.d"
         if unittest_verbosity() >= 2:
             sys.stderr.write("Running following command:\n{}\n".format(" ".join(cmd)))
-        process = subprocess.Popen(cmd, env={"PYLINTHOME": ".pylint.d"}, stdout=subprocess.PIPE,
-                                   stderr=subprocess.PIPE, close_fds=True)
+        process = subprocess.Popen(cmd, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                   close_fds=True)
         out, err = process.communicate()
 
         if process.returncode != 0:
