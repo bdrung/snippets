@@ -22,6 +22,13 @@ from . import get_source_files, unittest_verbosity
 
 
 class Flake8TestCase(unittest.TestCase):
+    """
+    This unittest class provides a test that runs the flake8 code
+    checker (which combines pycodestyle and pyflakes) on the Python
+    source code. The list of source files is provided by the
+    get_source_files() function.
+    """
+
     def test_flake8(self):
         """Test: Run flake8 on Python source code"""
         with open("/proc/self/cmdline", "r") as cmdline_file:

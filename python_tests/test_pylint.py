@@ -27,6 +27,13 @@ CONFIG = os.path.join(os.path.dirname(__file__), "pylint.conf")
 
 
 class PylintTestCase(unittest.TestCase):
+    """
+    This unittest class provides a test that runs the pylint code check
+    on the Python source code. The list of source files is provided by
+    the get_source_files() function and pylint is purely configured via
+    a config file.
+    """
+
     def test_pylint(self):
         """Test: Run pylint on Python source code"""
 
