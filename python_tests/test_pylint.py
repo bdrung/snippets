@@ -1,5 +1,5 @@
 # Copyright (C) 2010, Stefano Rivera <stefanor@debian.org>
-# Copyright (C) 2017, Benjamin Drung <bdrung@debian.org>
+# Copyright (C) 2017-2018, Benjamin Drung <bdrung@debian.org>
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted, provided that the above
