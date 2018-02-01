@@ -37,11 +37,9 @@ class PylintTestCase(unittest.TestCase):
     def test_pylint(self):
         """Test: Run pylint on Python source code"""
 
-        if sys.version_info[0] == 3:
-            pylint_binary = "pylint3"
-        else:
-            pylint_binary = "pylint"
-        cmd = [pylint_binary, "--rcfile=" + CONFIG, "--"] + get_source_files()
+        with open("/proc/self/cmdline", "r") as cmdline_file:
+            python_binary = cmdline_file.read().split("\0")[0]
+        cmd = [python_binary, "-m", "pylint", "--rcfile=" + CONFIG, "--"] + get_source_files()
         env = os.environ.copy()
         env["PYLINTHOME"] = ".pylint.d"
         if unittest_verbosity() >= 2:
@@ -62,6 +60,6 @@ class PylintTestCase(unittest.TestCase):
             # Strip logging of used config file (introduced in pylint 1.8)
             err = re.sub("^Using config file .*\n", "", err.decode()).rstrip()
 
-            err_msg = ("{} exited with code {} and has unexpected output on stderr:\n{}\n"
-                       .format(pylint_binary, process.returncode, err)) if err else ""
-            self.fail("{}{} found issues:\n{}".format(err_msg, pylint_binary, out))
+            err_msg = ("pylint exited with code {} and has unexpected output on stderr:\n{}\n"
+                       .format(process.returncode, err)) if err else ""
+            self.fail("{}pylint found issues:\n{}".format(err_msg, out))
