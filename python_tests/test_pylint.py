@@ -57,6 +57,9 @@ class PylintTestCase(unittest.TestCase):
             out = re.sub("^(-+|Your code has been rated at .*)$", "", out.decode(),
                          flags=re.MULTILINE).rstrip()
 
+            # Strip logging of used config file (introduced in pylint 1.8)
+            err = re.sub("^Using config file .*\n", "", err.decode()).rstrip()
+
             err_msg = ("{} exited with code {} and has unexpected output on stderr:\n{}\n"
-                       .format(pylint_binary, process.returncode, err.decode())) if err else ""
+                       .format(pylint_binary, process.returncode, err)) if err else ""
             self.fail("{}{} found issues:\n{}".format(err_msg, pylint_binary, out))
