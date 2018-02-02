@@ -60,6 +60,13 @@ class PylintTestCase(unittest.TestCase):
             # Strip logging of used config file (introduced in pylint 1.8)
             err = re.sub("^Using config file .*\n", "", err.decode()).rstrip()
 
-            err_msg = ("pylint exited with code {} and has unexpected output on stderr:\n{}\n"
-                       .format(process.returncode, err)) if err else ""
-            self.fail("{}pylint found issues:\n{}".format(err_msg, out))
+            msgs = []
+            if err:
+                msgs.append("pylint exited with code {} and has unexpected output on stderr:\n{}"
+                            .format(process.returncode, err))
+            if out:
+                msgs.append("pylint found issues:\n{}".format(out))
+            if not msgs:
+                msgs.append("pylint exited with code {} and has no output on stdout or stderr."
+                            .format(process.returncode))
+            self.fail("\n".join(msgs))
