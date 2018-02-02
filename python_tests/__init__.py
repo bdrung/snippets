@@ -32,8 +32,8 @@ def get_source_files():
             alternative = os.path.join(os.environ.get("OLDPWD", ""), code_file)
             code_file = alternative if os.path.exists(alternative) else code_file
         if is_script:
-            with open(code_file, "r") as script_file:
-                shebang = script_file.readline()
+            with open(code_file, "rb") as script_file:
+                shebang = script_file.readline().decode("utf-8")
             if ((sys.version_info[0] == 3 and "python3" in shebang) or
                     ("python" in shebang and "python3" not in shebang)):
                 files.append(code_file)
