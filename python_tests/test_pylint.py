@@ -37,12 +37,10 @@ class PylintTestCase(unittest.TestCase):
     def test_pylint(self):
         """Test: Run pylint on Python source code"""
 
-        env = os.environ.copy()
-        env["PYLINTHOME"] = ".pylint.d"
         cmd = [sys.executable, "-m", "pylint", "--rcfile=" + CONFIG, "--"] + get_source_files()
         if unittest_verbosity() >= 2:
             sys.stderr.write("Running following command:\n{}\n".format(" ".join(cmd)))
-        process = subprocess.Popen(cmd, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                    close_fds=True)
         out, err = process.communicate()
 
