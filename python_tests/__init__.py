@@ -12,6 +12,8 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+"""Helper functions for testing."""
+
 import inspect
 import os
 import sys
@@ -19,7 +21,7 @@ import unittest
 
 
 def get_source_files():
-    """Return a list of sources files/directories (to check with flake8/pylint)"""
+    """Return a list of sources files/directories (to check with flake8/pylint)."""
     scripts = ["REPLACE ME script1", "script2"]
     modules = ["REPLACE ME module1"]
     py_files = ["REPLACE ME file1.py"]
@@ -43,8 +45,10 @@ def get_source_files():
 
 
 def unittest_verbosity():
-    """Return the verbosity setting of the currently running unittest
-    program, or None if none is running.
+    """
+    Return the verbosity setting of the currently running unittest.
+
+    If no test is running, return None.
     """
     frame = inspect.currentframe()
     while frame:
